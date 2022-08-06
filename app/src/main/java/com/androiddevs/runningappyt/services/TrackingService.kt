@@ -1,5 +1,8 @@
 package com.androiddevs.runningappyt.services
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
 import androidx.lifecycle.LifecycleService
 import com.androiddevs.runningappyt.other.Constants.ACTION_PAUSE_SERVICE
@@ -24,5 +27,8 @@ class TrackingService : LifecycleService() {
             }
         }
         return super.onStartCommand(intent, flags, startId)
+    }
+    private fun createNotificationManager(notificationManager: NotificationManager) {
+        val channel = NotificationChannel()
     }
 }

@@ -1,7 +1,6 @@
 package com.androiddevs.runningappyt.services
 
 import android.annotation.SuppressLint
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_LOW
@@ -11,6 +10,7 @@ import android.content.Context
 import android.content.Intent
 import android.location.Location
 import android.os.Build
+import android.os.Looper
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
@@ -21,6 +21,8 @@ import com.androiddevs.runningappyt.other.Constants.ACTION_PAUSE_SERVICE
 import com.androiddevs.runningappyt.other.Constants.ACTION_SHOW_TRACKING_FRAGMENT
 import com.androiddevs.runningappyt.other.Constants.ACTION_START_OR_RESUME_SERVICE
 import com.androiddevs.runningappyt.other.Constants.ACTION_STOP_SERVICE
+import com.androiddevs.runningappyt.other.Constants.FASTEST_LOCATION_INTERVAL
+import com.androiddevs.runningappyt.other.Constants.LOCATION_UPDATE_INTERVAL
 import com.androiddevs.runningappyt.other.Constants.NOTIFICATION_CHANNEL_ID
 import com.androiddevs.runningappyt.other.Constants.NOTIFICATION_CHANNEL_NAME
 import com.androiddevs.runningappyt.other.Constants.NOTIFICATION_ID
@@ -29,13 +31,13 @@ import com.androiddevs.runningappyt.ui.MainActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import com.google.android.gms.location.LocationResult
-import com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY
 import com.google.android.gms.maps.model.LatLng
 import timber.log.Timber
 
-typealias polyLine = MutableLiveData<MutableList<LatLng>>
-typealias Polylines = MutableLiveData<polyLine>
+typealias Polyline = MutableList<LatLng>
+typealias Polylines = MutableList<Polyline>
 
 class TrackingService : LifecycleService() {
 
@@ -106,10 +108,10 @@ class TrackingService : LifecycleService() {
     }
 
     val locationCallback = object : LocationCallback() {
-        override fun onLocationResult(p0: LocationResult) {
-            super.onLocationResult(p0)
+        override fun onLocationResult(result: LocationResult) {
+            super.onLocationResult(result)
             if(isTracking.value!!) {
-                p0?.locations?.let { locations ->
+                result?.locations?.let { locations ->
                     for(location in locations) {
                         addPathPoint(location)
                         Timber.d("NEW LOCATION: ${location.latitude}, ${location.longitude}")
@@ -174,5 +176,4 @@ class TrackingService : LifecycleService() {
         )
         notificationManager.createNotificationChannel(channel)
     }
-
 }

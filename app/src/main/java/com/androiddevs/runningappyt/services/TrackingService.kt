@@ -12,6 +12,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
+import androidx.lifecycle.MutableLiveData
 import com.androiddevs.runningappyt.R
 import com.androiddevs.runningappyt.other.Constants.ACTION_PAUSE_SERVICE
 import com.androiddevs.runningappyt.other.Constants.ACTION_SHOW_TRACKING_FRAGMENT
@@ -21,9 +22,21 @@ import com.androiddevs.runningappyt.other.Constants.NOTIFICATION_CHANNEL_ID
 import com.androiddevs.runningappyt.other.Constants.NOTIFICATION_CHANNEL_NAME
 import com.androiddevs.runningappyt.other.Constants.NOTIFICATION_ID
 import com.androiddevs.runningappyt.ui.MainActivity
+import com.google.android.gms.maps.model.LatLng
 import timber.log.Timber
 
+typealias polyLine = MutableLiveData<MutableList<LatLng>>
+typealias polyLines = MutableLiveData<polyLine>
+
 class TrackingService : LifecycleService() {
+
+    companion object {
+        val isTracking = MutableLiveData<Boolean>()
+        val pathPoints = MutableLiveData<polyLines>()
+
+
+    }
+
 
     var isFirstRun = true
 

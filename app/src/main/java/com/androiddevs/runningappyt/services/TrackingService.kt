@@ -28,6 +28,7 @@ import com.androiddevs.runningappyt.other.Constants.LOCATION_UPDATE_INTERVAL
 import com.androiddevs.runningappyt.other.Constants.NOTIFICATION_CHANNEL_ID
 import com.androiddevs.runningappyt.other.Constants.NOTIFICATION_CHANNEL_NAME
 import com.androiddevs.runningappyt.other.Constants.NOTIFICATION_ID
+import com.androiddevs.runningappyt.other.Constants.TIMER_UPDATE_INTERVAL
 import com.androiddevs.runningappyt.other.TrackingUtility
 import com.androiddevs.runningappyt.ui.MainActivity
 import com.google.android.gms.location.*
@@ -150,10 +151,10 @@ class TrackingService : LifecycleService() {
     }
 
     val locationCallback = object : LocationCallback() {
-        override fun onLocationResult(result: LocationResult?) {
+        override fun onLocationResult(result: LocationResult) {
             super.onLocationResult(result)
             if (isTracking.value!!) {
-                result?.locations?.let { locations ->
+                result.locations.let { locations ->
                     for (location in locations) {
                         addPathPoint(location)
                         Timber.d("NEW LOCATION: ${location.latitude}, ${location.longitude}")

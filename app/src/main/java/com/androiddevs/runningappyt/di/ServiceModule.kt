@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import androidx.core.app.NotificationCompat
+import com.androiddevs.runningappyt.R
 import com.androiddevs.runningappyt.other.Constants
 import com.androiddevs.runningappyt.ui.MainActivity
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -40,5 +42,18 @@ object ServiceModule {
         },
         PendingIntent.FLAG_UPDATE_CURRENT
     )
+
+    @ServiceScoped
+    @Provides
+    fun provideBaseNotificationBuilder(
+        @ApplicationContext app: Context,
+        pendingIntent: PendingIntent
+    ) = NotificationCompat.Builder(app, Constants.NOTIFICATION_CHANNEL_ID)
+        .setAutoCancel(false)
+        .setOngoing(true)
+        .setSmallIcon(R.drawable.ic_directions_run_black_24dp)
+        .setContentTitle("Running App")
+        .setContentText("00:00:00")
+        .setContentIntent(pendingIntent)
 
 }

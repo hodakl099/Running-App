@@ -5,5 +5,4 @@
         android:visible="false"
         android:icon="@drawable/ic_close_white"
         android:title="Cancel Run"/>
-
 </menu>

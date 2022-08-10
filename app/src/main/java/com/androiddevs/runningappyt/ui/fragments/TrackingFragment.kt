@@ -2,7 +2,10 @@ package com.androiddevs.runningappyt.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
+import androidx.core.view.MenuHost
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -33,8 +36,11 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
 
     private var curTimeInMillis = 0L
 
+    private var menu : Menu? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val menuHost : MenuHost = requireActivity()
         mapView.onCreate(savedInstanceState)
         btnToggleRun.setOnClickListener {
             toggleRun()
@@ -71,6 +77,10 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
         } else {
             sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     private fun updateTracking(isTracking: Boolean) {

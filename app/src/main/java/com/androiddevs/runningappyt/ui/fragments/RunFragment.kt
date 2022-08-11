@@ -16,12 +16,10 @@ import kotlinx.android.synthetic.main.fragment_run.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
-
 @AndroidEntryPoint
-class RunFragment : Fragment(R.layout.fragment_run),  EasyPermissions.PermissionCallbacks  {
+class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionCallbacks {
 
-    private val viewModel : MainViewModel by viewModels()
-
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,6 +28,7 @@ class RunFragment : Fragment(R.layout.fragment_run),  EasyPermissions.Permission
             findNavController().navigate(R.id.action_runFragment_to_trackingFragment)
         }
     }
+
     private fun requestPermissions() {
         if(TrackingUtility.hasLocationPermissions(requireContext())) {
             return
@@ -53,6 +52,7 @@ class RunFragment : Fragment(R.layout.fragment_run),  EasyPermissions.Permission
             )
         }
     }
+
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
         if(EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             AppSettingsDialog.Builder(this).build().show()
@@ -72,3 +72,7 @@ class RunFragment : Fragment(R.layout.fragment_run),  EasyPermissions.Permission
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 }
+
+
+
+

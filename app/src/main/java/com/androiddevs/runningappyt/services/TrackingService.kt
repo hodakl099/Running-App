@@ -2,6 +2,7 @@ package com.androiddevs.runningappyt.services
 
 
 
+
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -31,8 +32,11 @@ import com.androiddevs.runningappyt.other.Constants.NOTIFICATION_ID
 import com.androiddevs.runningappyt.other.Constants.TIMER_UPDATE_INTERVAL
 import com.androiddevs.runningappyt.other.TrackingUtility
 import com.androiddevs.runningappyt.ui.MainActivity
-import com.google.android.gms.location.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
+import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -45,9 +49,9 @@ import javax.inject.Inject
 typealias Polyline = MutableList<LatLng>
 typealias Polylines = MutableList<Polyline>
 
-
 @AndroidEntryPoint
 class TrackingService : LifecycleService() {
+
     var isFirstRun = true
     var serviceKilled = false
 
@@ -76,7 +80,7 @@ class TrackingService : LifecycleService() {
 
     override fun onCreate() {
         super.onCreate()
-        curNotificationBuilder = baseNotificationBuilder
+        baseNotificationBuilder = curNotificationBuilder
         postInitialValues()
         fusedLocationProviderClient = FusedLocationProviderClient(this)
 
@@ -260,6 +264,7 @@ class TrackingService : LifecycleService() {
         notificationManager.createNotificationChannel(channel)
     }
 }
+
 
 
 

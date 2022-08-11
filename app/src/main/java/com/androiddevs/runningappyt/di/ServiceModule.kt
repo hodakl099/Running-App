@@ -1,6 +1,5 @@
 package com.androiddevs.runningappyt.di
 
-import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -52,3 +51,4 @@ object ServiceModule {
         .setContentText("00:00:00")
         .setContentIntent(pendingIntent)
 }
+

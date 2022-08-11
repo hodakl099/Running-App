@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -37,20 +38,27 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
 
     private var curTimeInMillis = 0L
 
-    private var menu: Menu? = null
+    private var itemMenu: Menu? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        setHasOptionsMenu(true)
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mapView.onCreate(savedInstanceState)
+
+        val menuHost : MenuHost = requireActivity()
+
+        menuHost.addMenuProvider(object : MenuProvider{
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                  menuInflater.inflate(R.menu.toolbar_tracking_menu, menu)
+                  itemMenu = menu
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                TODO("Not yet implemented")
+            }
+
+        })
+
         btnToggleRun.setOnClickListener {
             toggleRun()
         }
@@ -82,7 +90,7 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
 
     private fun toggleRun() {
         if(isTracking) {
-            menu?.getItem(0)?.isVisible = true
+            itemMenu?.getItem(0)?.isVisible = true
             sendCommandToService(ACTION_PAUSE_SERVICE)
         } else {
             sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
@@ -92,13 +100,13 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.toolbar_tracking_menu, menu)
-        this.menu = menu
+        this.itemMenu = menu
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         if(curTimeInMillis > 0L) {
-            this.menu?.getItem(0)?.isVisible = true
+            this.itemMenu?.getItem(0)?.isVisible = true
         }
     }
 
@@ -138,7 +146,7 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
             btnFinishRun.visibility = View.VISIBLE
         } else {
             btnToggleRun.text = "Stop"
-            menu?.getItem(0)?.isVisible = true
+            itemMenu?.getItem(0)?.isVisible = true
             btnFinishRun.visibility = View.GONE
         }
     }

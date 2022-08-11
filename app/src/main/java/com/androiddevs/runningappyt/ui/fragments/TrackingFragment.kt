@@ -38,23 +38,31 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
 
     private var curTimeInMillis = 0L
 
-    private var itemMenu: Menu? = null
-
+    private var menu1: Menu? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mapView.onCreate(savedInstanceState)
 
-        val menuHost : MenuHost = requireActivity()
+        val menuHos : MenuHost = requireActivity()
 
-        menuHost.addMenuProvider(object : MenuProvider{
+        menuHos.addMenuProvider(object : MenuProvider{
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                  menuInflater.inflate(R.menu.toolbar_tracking_menu, menu)
-                  itemMenu = menu
+                menuInflater.inflate(R.menu.toolbar_tracking_menu, menu)
+                menu1 = menu
+
+                if (curTimeInMillis > 0L){
+                    menu1?.getItem(0)?.isVisible = true
+                }
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                TODO("Not yet implemented")
+                when(menuItem.itemId){
+                    R.id.miTrackingCancel -> {
+                        showCancelTrackingDialog()
+                    }
+                }
+                return false
             }
 
         })
@@ -90,33 +98,11 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
 
     private fun toggleRun() {
         if(isTracking) {
-            itemMenu?.getItem(0)?.isVisible = true
+            menu1?.getItem(0)?.isVisible = true
             sendCommandToService(ACTION_PAUSE_SERVICE)
         } else {
             sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.toolbar_tracking_menu, menu)
-        this.itemMenu = menu
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
-        if(curTimeInMillis > 0L) {
-            this.itemMenu?.getItem(0)?.isVisible = true
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.miTrackingCancel -> {
-                showCancelTrackingDialog()
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun showCancelTrackingDialog() {
@@ -146,7 +132,7 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
             btnFinishRun.visibility = View.VISIBLE
         } else {
             btnToggleRun.text = "Stop"
-            itemMenu?.getItem(0)?.isVisible = true
+            menu1?.getItem(0)?.isVisible = true
             btnFinishRun.visibility = View.GONE
         }
     }

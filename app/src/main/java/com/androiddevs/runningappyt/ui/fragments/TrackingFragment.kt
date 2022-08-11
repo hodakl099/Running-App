@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -36,12 +38,33 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
 
     private var curTimeInMillis = 0L
 
-    private var menu : Menu? = null
+    private var itemMenu : Menu? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val menuHost : MenuHost = requireActivity()
         mapView.onCreate(savedInstanceState)
+
+        val menuHost : MenuHost = requireActivity()
+
+
+        menuHost.addMenuProvider(object : MenuProvider{
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.toolbar_tracking_menu, menu)
+
+                itemMenu = menu
+
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                if (curTimeInMillis > 0L) {
+                    itemMenu?.getItem(0)?.isVisible = true
+                }
+                return true
+
+            }
+
+        } )
+
         btnToggleRun.setOnClickListener {
             toggleRun()
         }
@@ -51,6 +74,8 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
         }
 
         subscribeToObservers()
+
+
     }
 
     private fun subscribeToObservers() {

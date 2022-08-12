@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.androiddevs.runningappyt.R
 import com.androiddevs.runningappyt.other.TrackingUtility
 import com.androiddevs.runningappyt.ui.viewodels.MainViewModel
 import com.androiddevs.runningappyt.ui.viewodels.StatisticsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_statistics.*
+import java.lang.Math.round
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
@@ -31,14 +34,14 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
         viewModel.totalDistance.observe(viewLifecycleOwner, Observer {
             it?.let {
                 val km = it / 1000f
-                val totalDistance = round(km * 10f) / 10f
+                val totalDistance = (km * 10f).roundToInt() / 10f
                 val totalDistanceString = "${totalDistance}km"
                 tvTotalDistance.text = totalDistanceString
             }
         })
         viewModel.totalAvgSpeed.observe(viewLifecycleOwner, Observer {
             it?.let {
-                val avgSpeed = round(it * 10f) / 10f
+                val avgSpeed = (it * 10f).roundToInt() / 10f
                 val avgSpeedString = "${avgSpeed}km/h"
                 tvAverageSpeed.text = avgSpeedString
             }

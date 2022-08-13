@@ -11,10 +11,12 @@ import com.androiddevs.runningappyt.other.Constants.KEY_FIRST_TIME_TOGGLE
 import com.androiddevs.runningappyt.other.Constants.KEY_NAME
 import com.androiddevs.runningappyt.other.Constants.KEY_WEIGHT
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_setup.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SetupFragment : Fragment(R.layout.fragment_setup) {
 
 

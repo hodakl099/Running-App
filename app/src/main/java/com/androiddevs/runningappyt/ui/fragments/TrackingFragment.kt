@@ -189,6 +189,7 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
         )
     }
 
+
     private fun endRunAndSaveToDb() {
         map?.snapshot { bmp ->
             var distanceInMeters = 0

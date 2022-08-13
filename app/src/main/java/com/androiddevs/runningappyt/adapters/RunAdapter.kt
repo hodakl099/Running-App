@@ -8,6 +8,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.androiddevs.runningappyt.R
 import com.androiddevs.runningappyt.db.Run
+import com.androiddevs.runningappyt.other.TrackingUtility
+import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.item_run.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
 
@@ -38,7 +43,27 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RunViewHolder, position: Int) {
-        TODO(
+        val run = differ.currentList[position]
+        holder.itemView.apply {
+            Glide.with(this).load(run.img).into(ivRunImage)
+
+            val calendar = Calendar.getInstance().apply {
+                timeInMillis = run.timeStamp
+            }
+            val dateFormat = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
+            tvDate.text = dateFormat.format(calendar.time)
+
+            val avgSpeed = "${run.avgSpeedInKMH}km/h"
+            tvAvgSpeed.text = avgSpeed
+
+            val distanceInKm = "${run.distanceInMeters / 1000f}km"
+            tvDistance.text = distanceInKm
+
+            tvTime.text = TrackingUtility.getFormattedStopWatchTime(run.timeInMillis)
+
+            val caloriesBurned = "${run.caloriesBurned}kcal"
+            tvCalories.text = caloriesBurned
+        }
     }
 
     override fun getItemCount(): Int {

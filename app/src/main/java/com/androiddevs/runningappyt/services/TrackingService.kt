@@ -51,6 +51,7 @@ typealias Polylines = MutableList<Polyline>
 @AndroidEntryPoint
 class TrackingService : LifecycleService() {
 
+
     var isFirstRun = true
     var serviceKilled = false
 

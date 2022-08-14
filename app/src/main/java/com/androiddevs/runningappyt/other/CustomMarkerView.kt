@@ -1,16 +1,17 @@
 package com.androiddevs.runningappyt.other
 
 
+
 import android.content.Context
 import com.androiddevs.runningappyt.db.Run
 import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.utils.MPPointF
-import kotlinx.android.synthetic.main.item_run.view.*
 import kotlinx.android.synthetic.main.marker_view.view.*
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class CustomMarkerView(
     val runs: List<Run>,

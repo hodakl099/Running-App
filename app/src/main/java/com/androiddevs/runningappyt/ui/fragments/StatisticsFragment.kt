@@ -3,12 +3,13 @@ package com.androiddevs.runningappyt.ui.fragments
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.androiddevs.runningappyt.R
+import com.androiddevs.runningappyt.other.CustomMarkerView
 import com.androiddevs.runningappyt.other.TrackingUtility
-import com.androiddevs.runningappyt.ui.viewodels.MainViewModel
 import com.androiddevs.runningappyt.ui.viewodels.StatisticsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_statistics.*
@@ -17,10 +18,7 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import kotlinx.android.synthetic.main.fragment_statistics.*
-import kotlin.math.round
 
-import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
@@ -34,7 +32,7 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
     }
 
     private fun setupBarChart() {
-        barChart.XAxis.apply {
+        barChart.xAxis.apply {
             position = XAxis.XAxisPosition.BOTTOM
             setDrawLabels(false)
             axisLineColor = Color.WHITE

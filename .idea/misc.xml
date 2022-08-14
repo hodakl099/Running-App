@@ -5,6 +5,9 @@
       <map>
         <entry key="..\:/Users/pc/Desktop/Develpment/flutter/Running-App/app/src/main/res/layout/activity_main.xml" value="0.38697916666666665" />
         <entry key="..\:/Users/pc/Desktop/Develpment/flutter/Running-App/app/src/main/res/menu/bottom_nav_menu.xml" value="0.289453125" />
+        <entry key="app/src/main/res/layout-land/fragment_statistics.xml" value="0.164021164021164" />
+        <entry key="app/src/main/res/layout/fragment_statistics.xml" value="0.19375" />
+        <entry key="app/src/main/res/layout/marker_view.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/menu/toolbar_tracking_menu.xml" value="0.19375" />
       </map>
     </option>
